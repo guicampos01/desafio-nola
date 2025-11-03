@@ -1,7 +1,7 @@
 
 # Nola Insights — Decisões Arquiteturais
 
-**Repositório: [github](https://github.com/lucasvieira94/nola-god-level)**   
+**Repositório: https://github.com/lucasvieira94/nola-god-level**   
 
 ## 1) TL;DR
 - **Objetivo:** permitir que a Maria compare desempenho por **canal** (faturamento, pedidos, ticket médio), filtrando por **loja** e por **mês** (ou **todo histórico**).
