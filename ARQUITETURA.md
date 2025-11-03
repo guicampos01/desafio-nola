@@ -3,7 +3,7 @@
 
 **Repositório: https://github.com/lucasvieira94/nola-god-level**   
 
-## 1) TL;DR
+## 1) Resumo
 - **Objetivo:** permitir que a Maria compare desempenho por **canal** (faturamento, pedidos, ticket médio), filtrando por **loja** e por **mês** (ou **todo histórico**).
 - **Stack:** React (Vite) → FastAPI → PostgreSQL com **materialized views** (MVs).
 - **Estratégia:** agregação no banco (SQL simples, rápido) + endpoint genérico `/query`.
