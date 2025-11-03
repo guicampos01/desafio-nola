@@ -36,7 +36,7 @@ function useQuery(makePayload, deps = []) {
   return { data, loading, error };
 }
 
-// ====== CARDS KPI ======
+// CARDS KPI
 function StatCard({ title, value, subtitle, icon = "money" }) {
   const icons = {
     money: (
@@ -112,7 +112,7 @@ function StatCard({ title, value, subtitle, icon = "money" }) {
   );
 }
 
-// ====== CARD PRODUTOS ======
+// CARD PRODUTOS
 function ProductsCard({ loading, error, data, storeName }) {
   return (
     <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
@@ -194,7 +194,7 @@ function ProductsCard({ loading, error, data, storeName }) {
   );
 }
 
-// ====== CARD HEATMAP ======
+// CARD HEATMAP
 function HeatmapCard({ loading, error, data, storeName }) {
   const dias = [
     { id: 0, label: "Dom" },
@@ -302,7 +302,7 @@ function HeatmapCard({ loading, error, data, storeName }) {
   );
 }
 
-// ====== EXPLORADOR (por canal, histórico ou mês específico) ======
+// EXPLORADOR
 function Explorer({ currentStoreId }) {
   const [metric, setMetric] = useState("revenue");
   const [rows, setRows] = useState([]);
@@ -310,8 +310,8 @@ function Explorer({ currentStoreId }) {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
   const [channels, setChannels] = useState([]);
-  const [months, setMonths] = useState([]);          // [{value:"2025-05", label:"Maio 2025"}, ...]
-  const [selectedMonth, setSelectedMonth] = useState(""); // "" = todo histórico
+  const [months, setMonths] = useState([]);          
+  const [selectedMonth, setSelectedMonth] = useState(""); 
 
   // carrega canais e meses uma vez
   useEffect(() => {
@@ -519,7 +519,7 @@ function Explorer({ currentStoreId }) {
 }
 
 
-// ====== APP PRINCIPAL ======
+// APP PRINCIPAL
 export default function App() {
   const [stores, setStores] = useState([]);
   const [storeId, setStoreId] = useState(1);

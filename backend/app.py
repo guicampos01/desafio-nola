@@ -8,15 +8,15 @@ import hashlib
 import time
 from datetime import datetime
 
-# ===== CONFIGURAÇÃO DO BANCO =====
+# CONFIGURAÇÃO DO BANCO
 PG_DSN = os.getenv(
     "PG_DSN",
     "postgresql://challenge:challenge_2024@localhost:5432/challenge_db"
 )
 
-# cache simples em memória (para repetir a mesma consulta)
+# cache simples em memória
 _CACHE: dict[str, dict] = {}
-CACHE_TTL = 120  # segundos
+CACHE_TTL = 120 
 
 app = FastAPI(title="Nola Insights MVP")
 
@@ -52,7 +52,7 @@ def list_channels():
             rows = cur.fetchall()
             return rows
 
-# NOVO: lista de meses disponíveis no dataset (derivado de sales.created_at)
+# lista de meses disponíveis no dataset
 @app.get("/months")
 def list_months():
     try:
@@ -64,14 +64,12 @@ def list_months():
                     ORDER BY month_start DESC
                 """)
                 rows = cur.fetchall()
-        # monta label "Maio 2025", "Abril 2025", ...
         meses_pt = [
             "janeiro","fevereiro","março","abril","maio","junho",
             "julho","agosto","setembro","outubro","novembro","dezembro"
         ]
         out = []
         for (month_start,) in rows:
-            # month_start vem como date
             ym = month_start.strftime("%Y-%m")
             label = f"{meses_pt[month_start.month-1].capitalize()} {month_start.year}"
             out.append({"value": ym, "label": label})
@@ -88,8 +86,7 @@ class QueryPayload(BaseModel):
     metrics: list[str] = Field(default_factory=list)
     dimensions: list[str] = Field(default_factory=list)
     filters: list[Filter] = Field(default_factory=list)
-    timeRange: dict = Field(default_factory=dict)  # ignorado
-    # NOVO: mês opcional no formato "YYYY-MM" (ex.: "2025-05")
+    timeRange: dict = Field(default_factory=dict)
     month: str | None = None
 
 def make_cache_key(payload: dict) -> str:
@@ -196,7 +193,7 @@ def query(payload: QueryPayload):
             where_clauses.append(f"s.{f.field} {f.op} %({f.field})s")
             params[f.field] = f.value
 
-    # NOVO: filtro por mês (se vier "month": "YYYY-MM")
+    # filtro por mês
     if payload.month:
         if "mv_revenue_daily" in src:
             where_clauses.append("s.date >= to_date(%(m)s,'YYYY-MM')")
@@ -206,8 +203,6 @@ def query(payload: QueryPayload):
             where_clauses.append("s.created_at >= to_date(%(m)s,'YYYY-MM')")
             where_clauses.append("s.created_at < (to_date(%(m)s,'YYYY-MM') + INTERVAL '1 month')")
             params["m"] = payload.month
-        # se for mv_top_products_30d ou mv_heatmap_hour e você quiser filtrar por mês,
-        # precisaria ter coluna de data nelas. Mantemos sem filtro nestes casos.
 
     where_clause = ""
     if where_clauses:
