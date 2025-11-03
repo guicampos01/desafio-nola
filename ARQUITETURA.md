@@ -62,23 +62,7 @@
 
 ---
 
-## 5) Contrato de Consulta (resumo)
-- **dimensions:** por ex. `["channel_id"]`, `["date"]`, `["product_id"]`, `["dow","hour"]`
-- **metrics:** `revenue`, `orders`, `avg_ticket` (e outras extensões possíveis)
-- **filters:** lista de `{ field, op, value }` (ex.: `store_id = 1`)
-- **month (opcional):** `"YYYY-MM"` para filtrar um mês; se ausente → **todo histórico**.
-
----
-
-## 6) Decisões-chave (por quê assim?)
-- **Agregação no DB (MVs):** menor latência e SQL mais simples no backend.
-- **Endpoint genérico `/query`:** um contrato declarativo evita múltiplos endpoints específicos.
-- **Lookup de nomes no front (`/channels`):** evita JOIN em toda consulta agregada.
-- **Cache 120s no backend:** reduz hits repetidos ao banco durante navegação.
-
----
-
-## 7) Como rodar (local)
+## 5) Como rodar (local)
 **Banco & dados (Docker):**
 ```bash
 docker compose up -d postgres
